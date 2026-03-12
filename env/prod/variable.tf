@@ -8,15 +8,15 @@ variable "cidr" {
   type = string
 }
 variable "private-subent" {
-  default = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
+  default = ["10.20.1.0/24", "10.20.2.0/24", "10.20.3.0/24"]
   type = list(string)
 }
 variable "public-subnet" {
-  default = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
+  default = ["10.20.101.0/24", "10.20.102.0/24", "10.20.103.0/24"]
   type = list(string)
 }
 variable "intra-subnet" {
-  default = ["10.0.5.0/24","10.0.6.0/24"]
+  default = ["10.20.5.0/24","10.20.6.0/24"]
   type = list(string)
 }
 variable "nat-gateway" {
