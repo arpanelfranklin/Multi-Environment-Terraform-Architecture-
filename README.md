@@ -1,180 +1,79 @@
-Multi-Environment Terraform Infrastructure
+Hi, I'm Arpanel Franklin
+DevOps Engineer | Cloud & Infrastructure Enthusiast
 
-This repository demonstrates a modular Terraform Infrastructure as Code (IaC) architecture designed to manage cloud infrastructure across multiple environments.
+I am a Computer Science student focused on DevOps, cloud infrastructure, and distributed systems.
+My work revolves around building reliable deployment pipelines, containerized applications, and infrastructure automation.
 
-The project separates reusable infrastructure modules from environment-specific configurations, allowing the same infrastructure logic to be reused for development, testing, and production environments.
+Currently exploring how modern systems are designed, deployed, and scaled in production environments.
 
-The objective is to follow best practices for scalable infrastructure management using Terraform.
+<p align="left"> <img src="https://komarev.com/ghpvc/?username=arpanelfranklin&label=Profile%20views&color=0e75b6&style=flat" alt="profile views"/> </p>
+Current Focus
 
-Architecture
+Building CI/CD pipelines and deployment workflows
 
-The infrastructure is organised using a module-based architecture.
+Learning Infrastructure as Code and configuration management
 
-Reusable infrastructure components are defined inside the modules directory, while environment configurations are maintained inside the env directory.
+Designing containerized microservice architectures
 
-Each environment calls the modules with its own configuration values.
+Exploring cloud-native systems and platform engineering
 
-modules → reusable infrastructure logic
-env     → environment specific configuration
-Repository Structure
-.
-├── modules/
-│   ├── vpc/
-│   ├── ec2/
-│   ├── s3/
-│   └── dynamoDB/
-│
-├── env/
-│   ├── dev/
-│   ├── testing/
-│   └── prod/
-│
-├── provider.tf
-└── terraform.tf
-Modules
+Currently Working With
 
-Each module represents a reusable infrastructure component:
+Kubernetes
 
-Module	Description
-vpc	Creates VPC and networking resources
-ec2	Launches compute instances
-s3	Creates S3 buckets
-dynamoDB	Creates DynamoDB table for Terraform state locking
-Backend Configuration
-
-Each environment configures a remote Terraform backend using:
-
-S3 for storing Terraform state
-
-DynamoDB for state locking
-
-Example backend configuration:
-
-terraform {
-  backend "s3" {
-    bucket         = "<environment>-s3-bucket"
-    key            = "terraform.tfstate"
-    region         = "us-east-2"
-    dynamodb_table = "<environment>-dynamodb-table"
-  }
-}
-
-This ensures that infrastructure state is stored remotely and protected from concurrent modifications.
-
-Requirements
-
-The following tools must be installed before running this project:
+Docker
 
 Terraform
 
-AWS CLI
+Jenkins
 
-Git
+AWS
 
-Installation
-Install Terraform
+Currently Learning
 
-MacOS
+Ansible
 
-brew install terraform
+Prometheus
 
-Linux
+Grafana
 
-sudo apt install terraform
+Cloud architecture patterns
 
-Verify installation
+Collaboration
 
-terraform -version
-Install AWS CLI
+I am open to collaborating on:
 
-MacOS
+DevOps tooling
 
-brew install awscli
+Infrastructure automation
 
-Linux
+Cloud-native projects
 
-sudo apt install awscli
+Open source contributions
 
-Verify installation
+Contact
 
-aws --version
-Configure AWS Credentials
+Email:
+arpanel.devops@gmail.com
 
-Terraform requires valid AWS credentials.
+LinkedIn:
+https://www.linkedin.com/in/arpanel-franklin-a5613a368
 
-Configure credentials using:
+GitHub:
+https://github.com/arpanelfranklin
 
-aws configure
+LeetCode:
+https://leetcode.com/arpanelfranklin
 
-You will be prompted to provide:
+Technologies and Tools
+<p align="left"> <img src="https://skillicons.dev/icons?i=aws" height="40"/> <img src="https://skillicons.dev/icons?i=docker" height="40"/> <img src="https://skillicons.dev/icons?i=kubernetes" height="40"/> <img src="https://skillicons.dev/icons?i=terraform" height="40"/> <img src="https://skillicons.dev/icons?i=jenkins" height="40"/> <img src="https://skillicons.dev/icons?i=bash" height="40"/> <img src="https://skillicons.dev/icons?i=linux" height="40"/> <img src="https://skillicons.dev/icons?i=nginx" height="40"/> <img src="https://skillicons.dev/icons?i=git" height="40"/> </p>
+Programming & Development
+<p align="left"> <img src="https://skillicons.dev/icons?i=java" height="40"/> <img src="https://skillicons.dev/icons?i=python" height="40"/> <img src="https://skillicons.dev/icons?i=js" height="40"/> <img src="https://skillicons.dev/icons?i=nodejs" height="40"/> <img src="https://skillicons.dev/icons?i=spring" height="40"/> <img src="https://skillicons.dev/icons?i=mongodb" height="40"/> <img src="https://skillicons.dev/icons?i=mysql" height="40"/> </p>
+GitHub Stats
+<p align="center"> <img src="https://github-readme-stats.vercel.app/api?username=arpanelfranklin&show_icons=true&theme=default" height="165"/> <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=arpanelfranklin&layout=compact" height="165"/> </p>
+Streak Stats
+<p align="center"> <img src="https://github-readme-streak-stats.herokuapp.com/?user=arpanelfranklin"/> </p>
+Philosophy
 
-AWS Access Key
-AWS Secret Access Key
-Default region
-Output format
-
-Ensure the IAM user has permissions for:
-
-EC2
-
-VPC
-
-S3
-
-DynamoDB
-
-Usage
-
-Navigate to the environment directory.
-
-Example:
-
-cd env/dev
-Initialize Terraform
-terraform init
-Validate Configuration
-terraform validate
-Preview Infrastructure Changes
-terraform plan
-Apply Infrastructure
-terraform apply
-
-Terraform will display the execution plan before provisioning infrastructure.
-
-Destroy Infrastructure
-
-To remove created resources:
-
-terraform destroy
-Key Concepts Demonstrated
-
-Terraform module architecture
-
-Multi-environment infrastructure
-
-Remote state management
-
-State locking with DynamoDB
-
-Reusable infrastructure components
-
-Infrastructure isolation between environments
-
-Future Improvements
-
-Potential improvements for this project:
-
-CI/CD pipeline integration
-
-Automated infrastructure validation
-
-Monitoring and logging integration
-
-Policy enforcement with Terraform
-
-Security scanning for infrastructure code
-
-Author
-
-Arpanel Franklin
-B.Tech Computer Science Engineering (DevOps Specialisation)
+I enjoy understanding how systems behave beyond the application layer —
+not just writing code, but learning how software is built, deployed, scaled, and maintained in production.
