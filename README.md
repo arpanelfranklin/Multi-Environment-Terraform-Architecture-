@@ -35,6 +35,8 @@ The structure follows common infrastructure practices used in **DevOps and platf
 ---
 
 # 2. Architecture Overview
+![Alt text](arcticture.png)
+
 
 The repository is designed around two key Terraform design principles:
 
