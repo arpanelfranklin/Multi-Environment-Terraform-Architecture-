@@ -1,4 +1,4 @@
-```markdown
+
 # Multi Environment Terraform Architecture
 
 A structured Terraform project demonstrating how to design and manage **multi-environment infrastructure** using reusable modules and environment isolation.
