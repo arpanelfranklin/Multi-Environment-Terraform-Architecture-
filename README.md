@@ -1,180 +1,499 @@
-Multi-Environment Terraform Infrastructure
+```markdown
+# Multi Environment Terraform Architecture
 
-This repository demonstrates a modular Terraform Infrastructure as Code (IaC) architecture designed to manage cloud infrastructure across multiple environments.
+A structured Terraform project demonstrating how to design and manage **multi-environment infrastructure** using reusable modules and environment isolation.
 
-The project separates reusable infrastructure modules from environment-specific configurations, allowing the same infrastructure logic to be reused for development, testing, and production environments.
+---
 
-The objective is to follow best practices for scalable infrastructure management using Terraform.
+# 1. Project Overview
 
-Architecture
+This repository demonstrates a **production-style Terraform architecture** designed to manage infrastructure across multiple environments such as:
 
-The infrastructure is organised using a module-based architecture.
+- Development
+- Testing
+- Production
 
-Reusable infrastructure components are defined inside the modules directory, while environment configurations are maintained inside the env directory.
+In real-world systems, maintaining separate environments is essential for **safe software delivery** and **operational stability**.
 
-Each environment calls the modules with its own configuration values.
+Typical workflows require:
 
-modules → reusable infrastructure logic
-env     → environment specific configuration
-Repository Structure
+- Developers to experiment in a **development environment**
+- QA teams to validate features in a **testing environment**
+- Stable workloads to run in **production**
+
+Without proper environment separation, changes in development could directly affect production systems.
+
+This project implements a **clean Terraform architecture** that:
+
+- Promotes reusable infrastructure modules
+- Ensures environment isolation
+- Enables centralized state management
+- Supports scalable infrastructure growth
+
+The structure follows common infrastructure practices used in **DevOps and platform engineering teams**.
+
+---
+
+# 2. Architecture Overview
+
+The repository is designed around two key Terraform design principles:
+
+1. **Reusable Modules**
+2. **Environment-Specific Deployments**
+
+
+Environment directories define how those modules are deployed in specific environments.
+
+The architecture follows this model:
+
+```
+
+Modules (Reusable Infrastructure)
+↓
+Environment Configuration
+↓
+Terraform State (Remote Backend)
+
+```
+
+Each environment independently calls the required modules while maintaining **separate Terraform state files**.
+
+This ensures that:
+
+- Infrastructure changes remain isolated
+- Environments can evolve independently
+- Production infrastructure remains protected
+
+---
+
+# 3. Repository Structure
+
+```
+
 .
-├── modules/
-│   ├── vpc/
-│   ├── ec2/
-│   ├── s3/
-│   └── dynamoDB/
+├── modules
+│   ├── vpc
+│   ├── ec2
+│   ├── s3
+│   └── dynamodb
 │
-├── env/
-│   ├── dev/
-│   ├── testing/
-│   └── prod/
+├── env
+│   ├── bootstrap
+│   ├── dev
+│   ├── testing
+│   └── prod
 │
 ├── provider.tf
 └── terraform.tf
-Modules
 
-Each module represents a reusable infrastructure component:
+```
 
-Module	Description
-vpc	Creates VPC and networking resources
-ec2	Launches compute instances
-s3	Creates S3 buckets
-dynamoDB	Creates DynamoDB table for Terraform state locking
-Backend Configuration
+## modules/
 
-Each environment configures a remote Terraform backend using:
+This directory contains **reusable Terraform modules**.
 
-S3 for storing Terraform state
+Each module encapsulates a specific infrastructure component.
 
-DynamoDB for state locking
+### modules/vpc
+Defines network infrastructure including:
 
-Example backend configuration:
+- VPC
+- Subnets
+- Routing configuration
 
-terraform {
-  backend "s3" {
-    bucket         = "<environment>-s3-bucket"
-    key            = "terraform.tfstate"
-    region         = "us-east-2"
-    dynamodb_table = "<environment>-dynamodb-table"
-  }
-}
+### modules/ec2
+Creates compute instances including:
 
-This ensures that infrastructure state is stored remotely and protected from concurrent modifications.
+- EC2 instance configuration
+- Security groups
+- Instance metadata
 
-Requirements
+### modules/s3
+Defines S3 bucket resources used for:
 
-The following tools must be installed before running this project:
+- Storage
+- Terraform remote state
 
-Terraform
+### modules/dynamodb
+Defines DynamoDB tables used for:
 
-AWS CLI
+- Terraform state locking
+- Preventing concurrent Terraform operations
 
-Git
+---
 
-Installation
-Install Terraform
+## env/
 
-MacOS
+This directory contains **environment-specific configurations**.
 
-brew install terraform
+Each environment calls Terraform modules with environment-specific variables.
 
-Linux
+### env/bootstrap
 
-sudo apt install terraform
+This environment initializes **backend infrastructure** required for Terraform itself.
 
-Verify installation
+It creates:
 
-terraform -version
-Install AWS CLI
+- S3 bucket for remote state
+- DynamoDB table for state locking
 
-MacOS
+This must be deployed before other environments.
 
-brew install awscli
+---
 
-Linux
+### env/dev
 
-sudo apt install awscli
+Development environment infrastructure.
 
-Verify installation
+Used for:
 
-aws --version
-Configure AWS Credentials
+- Developer experimentation
+- Feature testing
+- Early-stage deployments
 
-Terraform requires valid AWS credentials.
+Typically uses smaller and cost-efficient resources.
 
-Configure credentials using:
+---
 
-aws configure
+### env/testing
 
-You will be prompted to provide:
+Testing environment used for:
 
-AWS Access Key
-AWS Secret Access Key
-Default region
-Output format
+- Integration testing
+- QA validation
+- Pre-production verification
 
-Ensure the IAM user has permissions for:
+Infrastructure here usually mirrors production more closely.
 
-EC2
+---
 
-VPC
+### env/prod
 
-S3
+Production environment used for:
 
-DynamoDB
+- Live workloads
+- Stable application deployments
 
-Usage
+This environment should be treated as **immutable and highly controlled**.
 
-Navigate to the environment directory.
+---
+
+## provider.tf
+
+Defines the Terraform provider configuration.
+
+Typically includes:
+
+- AWS provider
+- Region configuration
+- Authentication settings
+
+Example responsibilities:
+
+- Connecting Terraform to AWS
+- Defining provider versions
+
+---
+
+## terraform.tf
+
+Contains global Terraform configuration such as:
+
+- Terraform version constraints
+- Backend configuration
+- Shared settings used across environments
+
+---
+
+# 4. Key Concepts Implemented
+
+## Terraform Modules
+
+Modules allow infrastructure code to be **reusable and maintainable**.
+
+Instead of rewriting infrastructure logic for each environment, modules encapsulate common infrastructure patterns.
+
+Benefits include:
+
+- Code reuse
+- Reduced duplication
+- Easier maintenance
+
+---
+
+## Multi-Environment Infrastructure
+
+Separate directories represent different environments:
+
+- dev
+- testing
+- prod
+
+Each environment maintains **independent Terraform state**.
+
+This prevents infrastructure changes in one environment from impacting others.
+
+---
+
+## Remote State with S3
+
+Terraform state files are stored remotely in **Amazon S3**.
+
+Remote state provides:
+
+- Centralized infrastructure state
+- Team collaboration support
+- Backup and durability
+
+---
+
+## State Locking with DynamoDB
+
+Terraform uses **DynamoDB state locking** to prevent multiple users from modifying infrastructure simultaneously.
+
+This prevents:
+
+- State corruption
+- Race conditions
+- Conflicting infrastructure updates
+
+---
+
+## Bootstrapping Backend Infrastructure
+
+Terraform requires the backend storage (S3 and DynamoDB) to exist **before remote state can be configured**.
+
+For this reason, a **bootstrap environment** is used to create the backend infrastructure first.
+
+---
+
+## Environment Tagging
+
+Resources are tagged with environment-specific labels such as:
+
+```
+
+Environment = dev
+Environment = testing
+Environment = prod
+
+```
+
+Tagging improves:
+
+- Resource organization
+- Cost tracking
+- Operational visibility
+
+---
+
+## Network Isolation with CIDR Ranges
+
+Each environment uses a **separate CIDR range**.
 
 Example:
 
-cd env/dev
-Initialize Terraform
+```
+
+Dev     → 10.0.0.0/16
+Testing → 10.20.0.0/16
+Prod    → 10.30.0.0/16
+
+````
+
+This ensures environments remain **network-isolated** and prevents accidental overlap.
+
+---
+
+# 5. Prerequisites
+
+Before running this project, ensure the following tools are installed:
+
+- **Terraform**
+- **AWS CLI**
+- **Git**
+
+You must also have:
+
+- An **AWS account**
+- IAM permissions to create infrastructure resources
+
+---
+
+# 6. Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/yourusername/multi-env-terraform-architecture.git
+````
+
+Navigate into the project directory:
+
+```bash
+cd multi-env-terraform-architecture
+```
+
+Ensure your AWS credentials are configured:
+
+```bash
+aws configure
+```
+
+---
+
+# 7. Bootstrapping Infrastructure
+
+Terraform remote backends require infrastructure to exist before they can be used.
+
+Therefore, the **bootstrap environment** must be deployed first.
+
+This environment creates:
+
+* S3 bucket for storing Terraform state
+* DynamoDB table for state locking
+
+Navigate to the bootstrap directory:
+
+```bash
+cd env/bootstrap
+```
+
+Run Terraform commands to create backend infrastructure.
+
+Once created, other environments can safely use the remote backend.
+
+---
+
+# 8. Running the Infrastructure
+
+Terraform workflows typically follow four core commands.
+
+### Initialize Terraform
+
+```bash
 terraform init
-Validate Configuration
+```
+
+Downloads provider plugins and initializes the backend configuration.
+
+---
+
+### Validate Configuration
+
+```bash
 terraform validate
-Preview Infrastructure Changes
+```
+
+Checks Terraform configuration files for syntax and structural correctness.
+
+---
+
+### Generate Execution Plan
+
+```bash
 terraform plan
-Apply Infrastructure
+```
+
+Shows the changes Terraform will apply to infrastructure before making modifications.
+
+---
+
+### Apply Infrastructure Changes
+
+```bash
 terraform apply
+```
 
-Terraform will display the execution plan before provisioning infrastructure.
+Creates or updates infrastructure resources based on the Terraform configuration.
 
-Destroy Infrastructure
+---
 
-To remove created resources:
+# 9. Deploying Each Environment
 
+Each environment can be deployed independently.
+
+Example for the development environment:
+
+```bash
+cd env/dev
+terraform init
+terraform plan
+terraform apply
+```
+
+Example for the testing environment:
+
+```bash
+cd env/testing
+terraform init
+terraform plan
+terraform apply
+```
+
+Example for the production environment:
+
+```bash
+cd env/prod
+terraform init
+terraform plan
+terraform apply
+```
+
+Each environment maintains **separate infrastructure and state files**.
+
+---
+
+# 10. Terraform Outputs
+
+Modules expose outputs that provide important infrastructure information.
+
+Typical outputs include:
+
+* **VPC ID**
+* **Public Subnet IDs**
+* **EC2 Public IP Address**
+* **S3 Bucket Name**
+* **DynamoDB Table Name**
+
+Outputs allow other modules or systems to reference infrastructure resources.
+
+Example usage:
+
+```
+terraform output
+```
+
+---
+
+# 11. Destroying Infrastructure
+
+To remove infrastructure resources safely, run:
+
+```bash
 terraform destroy
-Key Concepts Demonstrated
+```
 
-Terraform module architecture
+Terraform will display a plan showing which resources will be deleted.
 
-Multi-environment infrastructure
+After confirmation, Terraform removes the infrastructure defined in that environment.
 
-Remote state management
+It is recommended to run destroy commands **only in the intended environment directory** to avoid accidental deletion of other environments.
 
-State locking with DynamoDB
+---
 
-Reusable infrastructure components
+# Summary
 
-Infrastructure isolation between environments
+This repository demonstrates a **structured Terraform architecture** designed for real-world infrastructure management.
 
-Future Improvements
+Key goals include:
 
-Potential improvements for this project:
+* Environment isolation
+* Reusable modules
+* Centralized Terraform state
+* Safe infrastructure lifecycle management
 
-CI/CD pipeline integration
+This structure can serve as a **foundation for scalable infrastructure deployments** in cloud environments.
 
-Automated infrastructure validation
-
-Monitoring and logging integration
-
-Policy enforcement with Terraform
-
-Security scanning for infrastructure code
-
-Author
-
-Arpanel Franklin
-B.Tech Computer Science Engineering (DevOps Specialisation)
+```
+```
