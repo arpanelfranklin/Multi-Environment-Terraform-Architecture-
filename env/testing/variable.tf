@@ -35,14 +35,14 @@ variable "billing-mode" {
 }
 
 ##Ec2 variable
-variable "vpc-id" {
-  default = module.vpc.vpc-id
-  type = string
-}
-variable "subnets-id" {
-  default = module.vpc.subnets-id
-  type = string
-}
+# variable "vpc-id" {
+#   default = module.vpc.vpc-id
+#   type = string
+# }
+# variable "subnets-id" {
+#   default = module.vpc.subnets-id
+#   type = string
+# }
 variable "ami" {
   default = "ami-06e3c045d79fd65d9"
   type = string

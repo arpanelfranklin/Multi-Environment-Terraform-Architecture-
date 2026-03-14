@@ -11,7 +11,7 @@ module "vpc" {
 
    # vpc and nat gateway
    enable_vpn_gateway = true
-   enable_nat_gateway = var.nat-gateway? 1:0
+   enable_nat_gateway = var.nat-gateway? true:false
 
    tags = {
     terraform = true

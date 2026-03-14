@@ -57,3 +57,7 @@ variable "instance-volume-type" {
   description = "this is the instance volume type"
   type = string
 }
+variable "public-subnet-id" {
+  description = "The ID of the subnet where the EC2 instance will be deployed"
+  type        = string
+}

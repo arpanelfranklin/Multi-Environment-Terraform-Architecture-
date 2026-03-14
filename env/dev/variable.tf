@@ -32,16 +32,16 @@ variable "nat-gateway" {
 
 
 # ec2 module variables
-variable "vpc-id" {
-  description = "vpc id"
-  default = module.vpc.vpc-id
-  type = string
-}
-variable "subnets-id" {
-  description = "subnets id of vpc"
-  default = module.vpc.public-subnet-id
-  type = string
-}
+# variable "vpc-id" {
+#   description = "vpc id"
+#   default = module.vpc.vpc-id
+#   type = string
+# }
+# variable "subnets-id" {
+#   description = "subnets id of vpc"
+#   default = module.vpc.public-subnet-id
+#   type = string
+# }
 variable "ingress-rules" {
   description = "this is the ingress rule"
   default = [{
@@ -57,7 +57,7 @@ variable "ingress-rules" {
     {
       port        = 22
       protocol    = "tcp"
-      cidr_blocks = ["${module.ec2.instance-private-ip}/32"] # Secure SSH access
+      # cidr_blocks = ["${module.ec2.instance-private-ip}/32"] # Secure SSH access
     },
     {
       port        = 8080
@@ -79,7 +79,7 @@ variable "ami" {
   type = string 
 }
 variable "instance-type" {
-  default = "t3.medium"
+  default = "t3.micro"
   type = string
 }
 variable "instance-volume-size" {

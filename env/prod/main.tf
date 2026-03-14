@@ -1,3 +1,8 @@
+## local variable
+locals {
+  vpc-id = module.vpc.vpc-id
+  subnets-id = module.vpc.public-subnet-id
+}
 module "vpc" {
   source = "../../modules/vpc"
   env = var.env
@@ -14,13 +19,14 @@ module "s3" {
 module "ec2" {
   source = "../../modules/ec2"
   env = var.env
-  subnets-id = var.public-subent-id
-  vpc-id = var.vpc-id
+  subnets-id = local.subnets-id
+  vpc-id = local.vpc-id
   ami = var.ami
   instance-count = var.instance-count
   instance-type = var.instance-type
   instance-volume-size = var.instance-volume-size
-  instance-volume-type = var.instance-volume-size
+  instance-volume-type = var.instance-volume-type
+  public-subnet-id = module.vpc.public-subnet-id
 
 }
 module "dynamoDB" {

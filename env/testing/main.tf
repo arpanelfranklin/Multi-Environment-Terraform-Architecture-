@@ -1,3 +1,8 @@
+#local variable
+locals{
+  vpc-id = module.vpc.vpc-id
+  subnets-id = module.vpc.public-subnet-id
+}
 module "vpc" {
   source = "..//../modules/vpc"
   env = var.env
@@ -29,7 +34,8 @@ module "ec2"{
     instance-type = var.instance-type
     instance-volume-size = var.instance-volume-size
     instance-volume-type = var.instance-volume-type
-    vpc-id = var.vpc-id
-    subnets-id = var.subnets-id
+    vpc-id = local.vpc-id
+    subnets-id = local.subnets-id
     ami = var.ami
+    public-subnet-id = module.vpc.public-subnet-id
 }

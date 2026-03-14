@@ -4,19 +4,19 @@ variable "env" {
 }
 # vpc variable
 variable "cidr" {
-  default = "10.20.0.0/16"
+  default = "10.30.0.0/16"
   type = string
 }
 variable "private-subent" {
-  default = ["10.20.1.0/24", "10.20.2.0/24", "10.20.3.0/24"]
+  default = ["10.30.1.0/24", "10.30.2.0/24", "10.30.3.0/24"]
   type = list(string)
 }
 variable "public-subnet" {
-  default = ["10.20.101.0/24", "10.20.102.0/24", "10.20.103.0/24"]
+  default = ["10.30.101.0/24", "10.30.102.0/24", "10.30.103.0/24"]
   type = list(string)
 }
 variable "intra-subnet" {
-  default = ["10.20.5.0/24","10.20.6.0/24"]
+  default = ["10.30.5.0/24","10.30.6.0/24"]
   type = list(string)
 }
 variable "nat-gateway" {
@@ -29,20 +29,20 @@ variable "azs" {
 }
 
 #ec2 vaiable
-variable "vpc-id" {
-  default = module.vpc.vpc-id
-  type = string
-}
-variable "public-subent-id" {
-  default = module.vpc.public-subnet-id
-  type = string
-}
+# variable "vpc-id" {
+#   default = module.vpc.vpc-id
+#   type = string
+# }
+# variable "public-subent-id" {
+#   default = module.vpc.public-subnet-id
+#   type = string
+# }
 variable "instance-count" {
   default = 3
   type = number
 }
 variable "instance-type" {
-  default = "t3.large"
+  default = "t3.micro"
   type = string
 }
 variable "security-group" {
@@ -59,7 +59,7 @@ variable "security-group" {
     {
       port        = 22
       protocol    = "tcp"
-      cidr_blocks = ["${module.ec2.instance-private-ip}/32"] # Secure SSH access
+      # cidr_blocks = ["${module.ec2.instance-private-ip}/32"] # Secure SSH access
     },
     {
       port        = 8080
