@@ -22,7 +22,7 @@ variable "public-subnet" {
   type = list(string)
 }
 variable "intra-subnet" {
-  default = ["10.0.5.0/24","10.0.6.0/24"]
+  default = ["10.0.5.0/24","10.0.6.0/24","10.0.7.0/24"]
   type = list(string)
 }
 variable "nat-gateway" {

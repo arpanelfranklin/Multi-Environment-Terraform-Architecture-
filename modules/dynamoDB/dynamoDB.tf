@@ -1,15 +1,14 @@
 resource "aws_dynamodb_table" "infra-dynamo-table" {
-  name = "${var.env}-dynamodb-table"
+  name = "${var.name}-dynamodb-table"
   billing_mode = var.billing-mode
-  hash_key = "LockId"
+  hash_key = "LockID"
 
   attribute {
-    name = "LockId"
+    name = "LockID"
     type = "S"
   }
 
   tags = {
-    name = "${var.env}-dynamodb-table"
-    environment = var.env
+    name = "${var.name}-dynamodb-table"
   }
 }

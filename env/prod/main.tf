@@ -7,15 +7,12 @@ module "vpc" {
   source = "../../modules/vpc"
   env = var.env
   cidr = var.cidr
-  public-subnets = var.private-subent
+  public-subnets = var.public-subnet
   private-subnets = var.private-subent
   azs = var.azs
   intra-subnets = var.intra-subnet
 }
-module "s3" {
-  source = "../../modules/s3"
-  env = var.env
-}
+
 module "ec2" {
   source = "../../modules/ec2"
   env = var.env
@@ -28,10 +25,4 @@ module "ec2" {
   instance-volume-type = var.instance-volume-type
   public-subnet-id = module.vpc.public-subnet-id
 
-}
-module "dynamoDB" {
-  source = "../../modules/dynamoDB"
-  env = var.env
-  billing-mode = var.billing-mode
-  
 }

@@ -1,5 +1,5 @@
-variable "env"{
-    description = "this is the environment"
+variable "name"{
+    description = "this is the name"
     type = string
 }
 variable "billing-mode" {

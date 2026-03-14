@@ -1,3 +1,14 @@
 .terraform.lock.hcl
 terraform-ansible-key.pub
 terraform-ansible-key
+env/dev/.terraform/modules/modules.json
+env/dev/.terraform/providers/registry.terraform.io/hashicorp/aws/6.36.0/darwin_arm64/LICENSE.txt
+env/dev/.terraform/providers/registry.terraform.io/hashicorp/aws/6.36.0/darwin_arm64/terraform-provider-aws_v6.36.0_x5
+env/prod/terraform.tfstate.backup
+env/prod/terraform.tfstate
+.terraform*
+.terraform/
+.tfstate
+.tfstate.backup
+env/bootstrap/terraform.tfstate
+env/bootstrap/terraform.tfstate.backup

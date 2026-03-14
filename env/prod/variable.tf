@@ -2,7 +2,7 @@ variable "env" {
   default = "prod"
   type = string
 }
-# vpc variable
+# vpc variable 
 variable "cidr" {
   default = "10.30.0.0/16"
   type = string
@@ -16,7 +16,7 @@ variable "public-subnet" {
   type = list(string)
 }
 variable "intra-subnet" {
-  default = ["10.30.5.0/24","10.30.6.0/24"]
+  default = ["10.30.5.0/24","10.30.6.0/24","10.30.7.0/24"]
   type = list(string)
 }
 variable "nat-gateway" {
@@ -78,7 +78,7 @@ variable "ami" {
 }
 variable "instance-volume-size" {
   default = 30
-  type = string
+  type = number
 }
 variable "instance-volume-type" {
   default = "gp3"

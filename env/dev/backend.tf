@@ -1,9 +1,9 @@
-# terraform {
-#   backend "s3" {
-#     bucket = "dev-s3-bucket"
-#     key = "terraform.tfstate"
-#     region = "us-east-2"
-#     dynamodb_table = "dev-dynamodb-table"
-#     use_lockfile = true
-#   }
-# }
+terraform {
+  backend "s3" {
+    bucket = "afd-terraform-state-lock-s3-bucket-afd"
+    key = "dev/terraform.tfstate"
+    region = "us-east-2"
+    dynamodb_table = "afd-terraform-state-lock-dynamodb-table"
+    use_lockfile = true
+  }
+}

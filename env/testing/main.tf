@@ -13,19 +13,6 @@ module "vpc" {
   public-subnets = var.public-subent
   private-subnets = var.private-subnet
 }
-
-## S3 
-module "s3" {
-  source = "../../modules/s3"
-  env = var.env
-}
-## DynamoDB
-module "dynamoDB" {
-  source = "../../modules/dynamoDB"
-  env = var.env
-  billing-mode = var.billing-mode
-}
-
 ## Ec2
 module "ec2"{
     source = "../../modules/ec2"
